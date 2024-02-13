@@ -7,7 +7,6 @@ import { useEffect } from 'react';
 import { LoadingComponent } from '../components/LoadingComponent';
 import { MyCartPage } from '../pages/MyCartPage';
 import { MyCompras } from '../pages/MyCompras';
-import { Products } from '../pages/Products';
 
 
 export const AppRouter = () => {
@@ -43,7 +42,6 @@ export const AppRouter = () => {
             }
 
             <Route path='/' element={<InicioPage />} />
-            <Route path='/productos' element={<Products />} />
             <Route path='/*' element={<Navigate to='/' />} />
 
         </Routes>

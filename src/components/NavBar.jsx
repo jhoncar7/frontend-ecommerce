@@ -17,12 +17,10 @@ export const NavBar = () => {
             backgroundColor: '#FFE600'
         }}>
             <div style={{ display: 'flex', alignItems: 'center', margin: '5px', padding: '5px', marginLeft: '20px' }}>
-                <Avatar alt='logo' src='logo.jfif' sx={{ width: 56, height: 56 }} />
+                <NavLink to='/'>
+                    <Avatar alt='logo' src='logo.jfif' sx={{ width: 56, height: 56 }} />
+                </NavLink>
                 <div>
-                    <NavLink
-                        to='/productos'
-                        className='navbar-brand'
-                        style={{ marginLeft: '15px' }}>Productos</NavLink>
                     {
                         isAdmin &&
                         <NavLink
