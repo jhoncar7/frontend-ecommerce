@@ -1,24 +1,35 @@
 import {
-    Box, Card, CardActions, CardContent, CardHeader,
+    Box, Button, Card, CardActions, CardContent, CardHeader,
     CardMedia, IconButton, Typography,
-} from "@mui/material"
+} from '@mui/material'
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import { Link, useNavigate } from 'react-router-dom';
+import { useProductStore } from '../hooks/useProductStore';
 
 export const CardItem = ({ _id, title, description, code, price, stock, category, thumbnail }) => {
+
+    const { startProductActivo } = useProductStore();
+    const navigate = useNavigate();
+
+    const onClickCard = () => {
+        navigate(`/product/${_id}`);
+        startProductActivo({ _id, title, description, code, price, stock, category, thumbnail });
+    }
+
     return (
-        <Card sx={{ maxWidth: 345 }}>
+        <Card sx={{ maxWidth: 345 }} onClick={onClickCard}>
             <CardHeader
                 title={title}
                 subheader={`Precio: ${price}`}
             />
             <CardMedia
-                component="img"
-                height="194"
+                component='img'
+                height='194'
                 image={thumbnail}
-                alt="Paella dish"
+                alt={title}
             />
             <CardContent>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant='body2' color='text.secondary'>
                     {description}
                 </Typography>
             </CardContent>
@@ -26,7 +37,7 @@ export const CardItem = ({ _id, title, description, code, price, stock, category
             <Box display='flex' alignItems='center'>
                 <Typography ml={2}>agregar al carrito</Typography>
                 <CardActions disableSpacing>
-                    <IconButton aria-label="share">
+                    <IconButton aria-label='share'>
                         <ShoppingCartOutlinedIcon />
                     </IconButton>
                 </CardActions>

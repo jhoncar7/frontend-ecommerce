@@ -31,6 +31,7 @@ export const authSlice = createSlice({
             state.email = null;
             state.rol = null;
             state.cart_id = null;
+            state.isAdmin = false;
         },
         onCheckingLogin: (state) => {
             state.status = 'checking';
@@ -40,6 +41,7 @@ export const authSlice = createSlice({
             state.email = null;
             state.rol = null;
             state.cart_id = null;
+            state.isAdmin = false;
         },
     },
 });

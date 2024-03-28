@@ -1,7 +1,7 @@
 import { Button, Grid, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
-import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
+import { Link } from 'react-router-dom';
 import { useAuthStore } from '../hooks/useAuthStore';
 
 export const LoginPage = () => {

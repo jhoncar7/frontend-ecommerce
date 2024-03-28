@@ -7,11 +7,14 @@ import { useEffect } from 'react';
 import { LoadingComponent } from '../components/LoadingComponent';
 import { MyCartPage } from '../pages/MyCartPage';
 import { MyCompras } from '../pages/MyCompras';
+import { ProductPage } from '../pages/ProductPage';
+import { AdminProductPage } from '../pages/AdminProductPage';
+import { AddProductPage } from '../pages/AddProductPage';
 
 
 export const AppRouter = () => {
 
-    const { status, startChekingLogin } = useAuthStore();
+    const { status, startChekingLogin, isAdmin } = useAuthStore();
 
     useEffect(() => {
         startChekingLogin();
@@ -37,11 +40,19 @@ export const AppRouter = () => {
                         <>
                             <Route path='/mis-compras' element={<MyCompras />} />
                             <Route path='/mi-carrito' element={<MyCartPage />} />
+                            {
+                                isAdmin &&
+                                <>
+                                    <Route path='/admin-product' element={<AdminProductPage />} />
+                                    <Route path='/admin-product/add' element={<AddProductPage />} />
+                                </>
+                            }
                         </>
                     )
             }
 
             <Route path='/' element={<InicioPage />} />
+            <Route path='/product/*' element={<ProductPage />} />
             <Route path='/*' element={<Navigate to='/' />} />
 
         </Routes>
