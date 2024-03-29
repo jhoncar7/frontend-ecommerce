@@ -39,9 +39,12 @@ export const validarToken = async () => {
     }
 }
 
-export const getProducts = async (query) => {
+export const getProducts = async (pageProducts = 1) => {
     try {
-        const { data } = await comicsApi.get('/products');
+
+        const { data } = await comicsApi.get(`/products?page=${pageProducts}`);
+
+        console.log(data);
 
         const { result } = data;
         const { payload: produtcs, totalDocs, totalPages, limit, query, page, hasNextPage, hasPrevPage, prevPage, nextPage } = result;
@@ -55,12 +58,30 @@ export const getProducts = async (query) => {
 
 export const createProduct = async (producto) => {
     try {
-
         const { data } = await comicsApi.post('/products', producto);
-
         return { ok: true, producto: data.producto };
     } catch (error) {
         console.log({ error });
-        return { ok: false, msg: error.response.data.errors[0].msg };
+        return { ok: false, msg: error.response.data.msg };
+    }
+}
+
+export const deleteProduct = async (idProduct) => {
+    try {
+        const { data } = await comicsApi.delete(`/products/${idProduct}`);
+        return { ok: true, msg: data.msg };
+    } catch (error) {
+        console.log({ error });
+        return { ok: false, msg: error.response.data.msg };
+    }
+}
+
+export const updateProduct = async (id, values) => {
+    try {
+        const { data } = await comicsApi.put(`/products/${id}`, values);
+        return { ok: true, producto: data.producto };
+    } catch (error) {
+        console.log({ error });
+        return { ok: false, msg: error.response.data.msg };
     }
 }

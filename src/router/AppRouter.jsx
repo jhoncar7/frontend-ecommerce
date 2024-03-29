@@ -10,6 +10,7 @@ import { MyCompras } from '../pages/MyCompras';
 import { ProductPage } from '../pages/ProductPage';
 import { AdminProductPage } from '../pages/AdminProductPage';
 import { AddProductPage } from '../pages/AddProductPage';
+import { EditProductPage } from '../pages/EditProductPage';
 
 
 export const AppRouter = () => {
@@ -45,6 +46,7 @@ export const AppRouter = () => {
                                 <>
                                     <Route path='/admin-product' element={<AdminProductPage />} />
                                     <Route path='/admin-product/add' element={<AddProductPage />} />
+                                    <Route path="/admin-product/edit/:id" element={<EditProductPage />} />
                                 </>
                             }
                         </>

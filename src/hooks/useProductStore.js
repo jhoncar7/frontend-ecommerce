@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import { createProduct, getProducts } from "../api/requestApi";
-import { onPagination, onProduct, onProducts } from "../store/productSlice";
+import { createProduct, deleteProduct, getProducts, updateProduct } from "../api/requestApi";
+import { onDeleteProduct, onPagination, onProduct, onProducts, onUpdateProduct } from "../store/productSlice";
 import Swal from "sweetalert2";
 
 
@@ -10,8 +10,8 @@ export const useProductStore = () => {
     const { product, products, pagination, } = useSelector(state => state.product);
 
 
-    const startGetProducts = async () => {
-        const resp = await getProducts();
+    const startGetProducts = async (page) => {
+        const resp = await getProducts(page);
         if (resp.ok) {
             const { pagination, produtcs } = resp;
             dispatch(onProducts(produtcs));
@@ -34,12 +34,44 @@ export const useProductStore = () => {
     const startCreateProduct = async (producto) => {
         const resp = await createProduct(producto);
 
-        console.log({ resp });
-
         if (resp.ok) return startProductActivo(resp.producto);
 
-        return Swal.fire({
+        Swal.fire({
             title: 'Uhh ocurrio un error al crear el producto',
+            html: resp.msg,
+            icon: 'error',
+        });
+
+        return false;
+    }
+
+    const startDeleteProduct = async (idProduct) => {
+        const resp = await deleteProduct(idProduct);
+
+        if (resp.ok) return dispatch(onDeleteProduct(idProduct));
+
+        Swal.fire({
+            title: 'Uhh ocurrio un error al eliminar el producto',
+            html: resp.msg,
+            icon: 'error',
+        });
+
+        return false;
+    }
+
+    const startUpdateProduct = async (id, values) => {
+        const resp = await updateProduct(id, values);
+
+        if (resp.ok) {
+            Swal.fire({
+                title: 'Prodcuto actualizado!',
+                icon: 'success',
+            });
+            return onUpdateProduct(resp.producto);
+        }
+
+        Swal.fire({
+            title: 'Uhh ocurrio un error al actualizar el producto',
             html: resp.msg,
             icon: 'error',
         });
@@ -53,5 +85,7 @@ export const useProductStore = () => {
         startGetProducts,
         startProductActivo,
         startCreateProduct,
+        startDeleteProduct,
+        startUpdateProduct,
     };
 }

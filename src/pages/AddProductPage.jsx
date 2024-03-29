@@ -58,15 +58,19 @@ export const AddProductPage = () => {
 
             const success = await startCreateProduct(formData);
 
+            console.log({ success });
+
             if (success) {
                 setLoading(false);
                 setShowMessage(true);
-
                 Swal.fire({
                     title: 'Producto agregado con exito',
                     icon: 'success',
                 });
                 navigate('/admin-product');
+            } else {
+                setLoading(false);
+                setShowMessage(false);
             }
         } catch (error) {
             console.log(error);
