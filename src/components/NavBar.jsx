@@ -1,11 +1,13 @@
-import { Avatar, Button } from '@mui/material';
+import { Avatar, Badge, Button } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import LocalGroceryStoreOutlinedIcon from '@mui/icons-material/LocalGroceryStoreOutlined';
 import { useAuthStore } from '../hooks/useAuthStore';
+import { useCartStore } from '../hooks/useCartStore';
 
 export const NavBar = () => {
 
     const { name, status, isAdmin, startLogout } = useAuthStore();
+    const { cart } = useCartStore();
 
     const onLogout = () => startLogout();
 
@@ -16,7 +18,7 @@ export const NavBar = () => {
             justifyContent: 'space-between',
             backgroundColor: '#FFE600'
         }}>
-            <div style={{ display: 'flex', alignItems: 'center', margin: '5px', padding: '5px', marginLeft: '20px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', marginLeft: '40px', padding: '5px' }}>
                 <NavLink to='/'>
                     <img src={'/logo.jfif'} alt='Logo de la aplicación' className='rounded-icon' />
                 </NavLink>
@@ -26,7 +28,7 @@ export const NavBar = () => {
                         <NavLink
                             to='/admin-product'
                             className='navbar-brand'
-                            style={{ marginLeft: '15px' }}>Configurar Productos</NavLink>
+                            style={{ marginLeft: '15px' }}>ADMIN PRODUCTS</NavLink>
                     }
 
                 </div>
@@ -38,7 +40,9 @@ export const NavBar = () => {
                     to={`${status === 'not-authenticated' ? '/auth/login' : '/mi-carrito'}`}
                     className='navbar-brand'
                     style={{ marginRight: '15px' }}>
-                    <LocalGroceryStoreOutlinedIcon />
+                    <Badge badgeContent={cart?.products.length} color="primary">
+                        <LocalGroceryStoreOutlinedIcon />
+                    </Badge>
                 </NavLink>
 
                 <NavLink

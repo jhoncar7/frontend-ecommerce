@@ -1,5 +1,6 @@
 import comicsApi from "./config";
 
+// AUTH
 export const loginUser = async (email, password) => {
     try {
         const { data } = await comicsApi.post('/auth/login', { email, password });
@@ -39,17 +40,50 @@ export const validarToken = async () => {
     }
 }
 
+export const sendEmailResetPass = async (email) => {
+    try {
+        const { data } = await comicsApi.post('/auth/cambiar-password', { email });
+        return { ok: true }
+    } catch (error) {
+        console.log(error);
+        return { ok: false, msg: error.response.data.msg };
+    }
+}
+
+export const resetPass = async (password, token) => {
+    try {
+        const { data } = await comicsApi.post('/auth/reset-password', { password, token });
+        return { ok: true }
+    } catch (error) {
+        console.log(error);
+        return { ok: false, msg: error.response.data.msg };
+    }
+}
+
+// PRODUCTS
 export const getProducts = async (pageProducts = 1) => {
     try {
 
         const { data } = await comicsApi.get(`/products?page=${pageProducts}`);
 
-        console.log(data);
-
         const { result } = data;
         const { payload: produtcs, totalDocs, totalPages, limit, query, page, hasNextPage, hasPrevPage, prevPage, nextPage } = result;
 
         return { ok: true, produtcs, pagination: { totalDocs, totalPages, limit, query, page, hasNextPage, hasPrevPage, prevPage, nextPage } };
+    } catch (error) {
+        console.log(error);
+        return { ok: false };
+    }
+}
+
+export const getProductbyId = async (id) => {
+    try {
+
+        const { data } = await comicsApi.get(`/products/${id}`);
+
+        const { producto } = data;
+
+        return { ok: true, product: producto };
     } catch (error) {
         console.log(error);
         return { ok: false };
@@ -83,5 +117,68 @@ export const updateProduct = async (id, values) => {
     } catch (error) {
         console.log({ error });
         return { ok: false, msg: error.response.data.msg };
+    }
+}
+
+// CARTS
+export const getCartById = async (id) => {
+    try {
+        const { data } = await comicsApi.get(`/carts/${id}`);
+        const { carrito } = data;
+        return { ok: true, cart: carrito };
+    } catch (error) {
+        console.log(error);
+        return { ok: false };
+    }
+}
+
+export const addProductInCart = async (idCart, idProduct) => {
+    try {
+        const { data } = await comicsApi.post(`/carts/${idCart}/product/${idProduct}`);
+        return { ok: true, cart: data.carrito };
+    } catch (error) {
+        console.log({ error });
+        return { ok: false, msg: error.response.data.msg };
+    }
+}
+
+export const removeProductInCart = async (idCart, idProduct, quantity) => {
+    try {
+        const { data } = await comicsApi.put(`/carts/${idCart}/products/${idProduct}`, { quantity });
+        return { ok: true, cart: data.carrito };
+    } catch (error) {
+        console.log({ error });
+        return { ok: false, msg: error.response.data.msg };
+    }
+}
+
+export const deleteProductInCart = async (idCart, idProduct) => {
+    try {
+        const { data } = await comicsApi.delete(`/carts/${idCart}/products/${idProduct}`);
+        return { ok: true, cart: data.carrito };
+    } catch (error) {
+        console.log({ error });
+        return { ok: false, msg: error.response.data.msg };
+    }
+}
+
+export const confirmarCompra = async (idCart) => {
+    try {
+        const { data } = await comicsApi.post(`/carts/${idCart}/purchase`);
+        return { ok: true };
+    } catch (error) {
+        console.log({ error });
+        return { ok: false, msg: error.response.data.msg };
+    }
+}
+
+// TICKETS
+export const getTickets = async () => {
+    try {
+        const { data } = await comicsApi.get('/tickets');
+        return { ok: true, tickets: data.tickets };
+    } catch (error) {
+        console.log(error);
+        return { ok: false };
     }
 }

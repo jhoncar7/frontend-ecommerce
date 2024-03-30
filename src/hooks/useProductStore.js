@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { createProduct, deleteProduct, getProducts, updateProduct } from "../api/requestApi";
+import { createProduct, deleteProduct, getProductbyId, getProducts, updateProduct } from "../api/requestApi";
 import { onDeleteProduct, onPagination, onProduct, onProducts, onUpdateProduct } from "../store/productSlice";
 import Swal from "sweetalert2";
 
@@ -16,6 +16,21 @@ export const useProductStore = () => {
             const { pagination, produtcs } = resp;
             dispatch(onProducts(produtcs));
             dispatch(onPagination(pagination));
+            return;
+        };
+
+        return Swal.fire({
+            title: 'Uhh ocurrio un error al obtener los productos',
+            html: 'Por favor intenta mas tarte',
+            icon: 'error',
+        });
+    }
+
+    const startGetProductById = async (id) => {
+        const resp = await getProductbyId(id);
+        if (resp.ok) {
+            const { product } = resp;
+            startProductActivo(product);
             return;
         };
 
@@ -87,5 +102,6 @@ export const useProductStore = () => {
         startCreateProduct,
         startDeleteProduct,
         startUpdateProduct,
+        startGetProductById,
     };
 }

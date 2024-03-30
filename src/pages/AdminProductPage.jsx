@@ -46,7 +46,7 @@ export const AdminProductPage = () => {
             {loading ? (
                 <div>Loading...</div>
             ) : (
-                <Box>
+                <Box sx={{ margin: '30px' }}>
                     <Box sx={{ '& > :not(style)': { m: 1 }, position: 'fixed', bottom: 50, right: 50 }}>
                         <Fab color="primary" aria-label="add" onClick={addProduct}>
                             <AddIcon />
@@ -56,15 +56,16 @@ export const AdminProductPage = () => {
                         <Table>
                             <TableHead>
                                 <TableRow>
-                                    <TableCell>Título</TableCell>
-                                    <TableCell>Descripción</TableCell>
-                                    <TableCell>Código</TableCell>
-                                    <TableCell>Precio</TableCell>
-                                    <TableCell>Stock</TableCell>
-                                    <TableCell>Categoría</TableCell>
-                                    <TableCell>Acciones</TableCell>
+                                    <TableCell sx={{ fontWeight: 'bold' }}>Título</TableCell>
+                                    <TableCell sx={{ fontWeight: 'bold' }}>Descripción</TableCell>
+                                    <TableCell sx={{ fontWeight: 'bold' }}>Código</TableCell>
+                                    <TableCell sx={{ fontWeight: 'bold' }}>Precio</TableCell>
+                                    <TableCell sx={{ fontWeight: 'bold' }}>Stock</TableCell>
+                                    <TableCell sx={{ fontWeight: 'bold' }}>Categoría</TableCell>
+                                    <TableCell sx={{ fontWeight: 'bold' }}>Acciones</TableCell>
                                 </TableRow>
                             </TableHead>
+
                             <TableBody>
                                 {products.map((product) => (
                                     <TableRow key={product._id}>
@@ -88,7 +89,7 @@ export const AdminProductPage = () => {
                         </Table>
                     </TableContainer>
 
-                    <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+                    {/* <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
                         {pagination && (
                             <Box>
                                 {Array.from({ length: pagination.totalPages }).map((_, index) => (
@@ -98,7 +99,32 @@ export const AdminProductPage = () => {
                                 ))}
                             </Box>
                         )}
+                    </Box> */}
+
+                    <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+                        {pagination && (
+                            <Box>
+                                {Array.from({ length: pagination.totalPages }).map((_, index) => (
+                                    <Button
+                                        key={index + 1}
+                                        onClick={() => goToPage(index + 1)}
+                                        sx={{
+                                            fontWeight: 'bold',
+                                            margin: '0 5px', // Añade un espacio entre los botones de la paginación
+                                            backgroundColor: 'rgba(0, 0, 0, 0.1)', // Cambia el color de fondo de los botones
+                                            color: 'black', // Cambia el color del texto de los botones
+                                            '&:hover': {
+                                                backgroundColor: 'rgba(0, 0, 0, 0.2)', // Cambia el color de fondo al pasar el ratón sobre los botones
+                                            },
+                                        }}
+                                    >
+                                        {index + 1}
+                                    </Button>
+                                ))}
+                            </Box>
+                        )}
                     </Box>
+
                 </Box>
             )}
         </>

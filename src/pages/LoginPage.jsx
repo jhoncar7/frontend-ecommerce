@@ -3,6 +3,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
 import { useAuthStore } from '../hooks/useAuthStore';
+import Swal from 'sweetalert2';
 
 export const LoginPage = () => {
 
@@ -27,6 +28,13 @@ export const LoginPage = () => {
     const isEmpty = Object.keys(errors).length === 0;
     if (!isEmpty) return;
     startLogin(email, password);
+  }
+
+  const handelResetPass = () => {
+    Swal.fire({
+      title: 'Se te envio un email al correo para reestablecer la contraseña',
+      icon: 'success',
+    });
   }
 
 
@@ -88,6 +96,10 @@ export const LoginPage = () => {
 
           <Grid container direction='row' justifyContent='end' mt={2}>
             <Link to='/auth/register'>¿No tienes cuenta? Registrarse</Link>
+          </Grid>
+
+          <Grid container direction='row' justifyContent='end' mt={2}>
+            <Link to='/auth/email'>¿Reestablecer contraseña?</Link>
           </Grid>
 
 

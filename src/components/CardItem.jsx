@@ -1,96 +1,39 @@
-// import {
-//     Box, Card, CardActions, CardContent, CardHeader,
-//     CardMedia, IconButton, Typography,
-// } from '@mui/material'
-// import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-// import { useNavigate } from 'react-router-dom';
-// import { useProductStore } from '../hooks/useProductStore';
-
-// export const CardItem = ({ _id, title, description, code, price, stock, category, thumbnail }) => {
-
-//     const { startProductActivo } = useProductStore();
-//     const navigate = useNavigate();
-
-//     const onClickCard = () => {
-//         navigate(`/product/${_id}`);
-//         startProductActivo({ _id, title, description, code, price, stock, category, thumbnail });
-//     }
-
-//     return (
-//         <Card sx={{ maxWidth: 345 }} onClick={onClickCard}>
-//             <CardHeader
-//                 title={title}
-//                 subheader={`Precio: ${price}`}
-//             />
-//             <CardMedia
-//                 component='img'
-//                 height='194'
-//                 image={thumbnail}
-//                 alt={title}
-//             />
-//             <CardContent>
-//                 <Typography variant='body2' color='text.secondary'>
-//                     {description}
-//                 </Typography>
-//             </CardContent>
-//             <Typography ml={2}>Stock: {stock}</Typography>
-//             <Box display='flex' alignItems='center'>
-//                 <Typography ml={2}>agregar al carrito</Typography>
-//                 <CardActions disableSpacing>
-//                     <IconButton aria-label='share'>
-//                         <ShoppingCartOutlinedIcon />
-//                     </IconButton>
-//                 </CardActions>
-//             </Box>
-//         </Card>
-//     )
-// }
-
-
-// CardItem.js
-import {
-    Box, Button, Card, CardActions, CardContent, CardHeader,
-    CardMedia, IconButton, Typography,
-} from '@mui/material'
-import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import { Card, CardActions, CardContent, CardHeader, CardMedia, Typography, } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import { useProductStore } from '../hooks/useProductStore';
 
-export const CardItem = ({ _id, title, description, code, price, stock, category, thumbnail }) => {
+export const CardItem = (product) => {
+
+    const { _id, title, description, price, thumbnail, stock } = product;
+
     const { startProductActivo } = useProductStore();
     const navigate = useNavigate();
 
     const onClickCard = () => {
         navigate(`/product/${_id}`);
-        startProductActivo({ _id, title, description, code, price, stock, category, thumbnail });
+        startProductActivo({ ...product });
     }
 
     return (
-        <Card sx={{ maxWidth: 300 }}>
-            <CardHeader
-                title={title}
-                subheader={`Precio: ${price}`}
-            />
+        <Card sx={{ maxWidth: 300, boxShadow: 1, borderRadius: 2 }} onClick={onClickCard}>
+            <CardHeader />
             <CardMedia
                 component='img'
                 height='200'
                 image={thumbnail}
                 alt={title}
+                style={{ objectFit: 'contain', borderTopLeftRadius: 8, borderTopRightRadius: 8 }}
             />
+
             <CardContent>
-                <Typography variant='body2' color='text.secondary'>
-                    {description}
-                </Typography>
-                <Typography ml={2}>Stock: {stock}</Typography>
-                <Box display='flex' alignItems='center'>
-                    <Typography ml={2}>Agregar al carrito</Typography>
-                    <CardActions disableSpacing>
-                        <IconButton aria-label='share' onClick={onClickCard}>
-                            <ShoppingCartOutlinedIcon />
-                        </IconButton>
-                    </CardActions>
-                </Box>
+                <Typography variant='h6'>{title}</Typography>
+                <Typography variant='body2' color='text.secondary'>{description}</Typography>
+                <Typography variant='body2' color='text.secondary'>Precio: ${price}</Typography>
             </CardContent>
+
+            <CardActions sx={{ justifyContent: 'center' }}>
+                <Typography><Link to={`/product/${_id}`} style={{ textDecoration: 'none', color: 'inherit' }}>Ver más...</Link></Typography>
+            </CardActions>
         </Card>
     )
 }

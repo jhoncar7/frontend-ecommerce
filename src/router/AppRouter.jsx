@@ -11,6 +11,8 @@ import { ProductPage } from '../pages/ProductPage';
 import { AdminProductPage } from '../pages/AdminProductPage';
 import { AddProductPage } from '../pages/AddProductPage';
 import { EditProductPage } from '../pages/EditProductPage';
+import { ResetPasswordPage } from '../pages/ResetPasswordPage';
+import { ResetPasswordEmailPage } from '../pages/ResetPasswordEmailPage';
 
 
 export const AppRouter = () => {
@@ -34,6 +36,8 @@ export const AppRouter = () => {
                         <>
                             <Route path='/auth/login' element={<LoginPage />} />
                             <Route path='/auth/register' element={<RegisterPage />} />
+                            <Route path='/auth/email' element={<ResetPasswordEmailPage />} />
+                            <Route path='/auth/reset-password' element={<ResetPasswordPage />} />
                         </>
                     )
                     :

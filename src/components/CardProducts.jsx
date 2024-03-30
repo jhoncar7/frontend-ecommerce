@@ -7,6 +7,7 @@ export const CardProducts = () => {
 
     const [currentPage, setCurrentPage] = useState(1);
     const { products, pagination, startGetProducts } = useProductStore();
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         startGetProducts(currentPage).then(() => setLoading(false));
@@ -28,7 +29,7 @@ export const CardProducts = () => {
                 }
 
             </Grid>
-            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4, mb:4 }}>
+            {/* <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4, mb:4 }}>
                 {pagination && (
                     <Box>
                         {Array.from({ length: pagination.totalPages }).map((_, index) => (
@@ -38,7 +39,32 @@ export const CardProducts = () => {
                         ))}
                     </Box>
                 )}
+            </Box> */}
+
+            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4, mb: 4 }}>
+                {pagination && (
+                    <Box>
+                        {Array.from({ length: pagination.totalPages }).map((_, index) => (
+                            <Button
+                                key={index + 1}
+                                onClick={() => goToPage(index + 1)}
+                                sx={{
+                                    fontWeight: 'bold',
+                                    margin: '0 5px', // Añade un espacio entre los botones de la paginación
+                                    backgroundColor: 'rgba(0, 0, 0, 0.1)', // Cambia el color de fondo de los botones
+                                    color: 'black', // Cambia el color del texto de los botones
+                                    '&:hover': {
+                                        backgroundColor: 'rgba(0, 0, 0, 0.2)', // Cambia el color de fondo al pasar el ratón sobre los botones
+                                    },
+                                }}
+                            >
+                                {index + 1}
+                            </Button>
+                        ))}
+                    </Box>
+                )}
             </Box>
+
         </>
     );
 }
