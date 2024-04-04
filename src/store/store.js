@@ -11,7 +11,6 @@ export const store = configureStore({
         product: productSlice.reducer,
         cart: cartSlice.reducer,
         ticket: ticketSlice.reducer,
-        // ticketSlice
     },
     devTools: process.env.NODE_ENV !== 'production',
 });

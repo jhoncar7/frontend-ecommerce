@@ -1,14 +1,33 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { CardItemCart } from "../components/CardItemCart";
 import { NavBar } from "../components/NavBar";
 import { useCartStore } from "../hooks/useCartStore";
 import { Button, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
+import { initMercadoPago, Wallet } from '@mercadopago/sdk-react'
+import { referenceId } from "../api/requestApi";
+import { getVariablesEnv } from "../helpers/getVariablesEnv";
+
+const {VITE_YOUR_PUBLIC_KEY_MERCADO_PAGO } = getVariablesEnv();
+
+initMercadoPago(VITE_YOUR_PUBLIC_KEY_MERCADO_PAGO, { locale: 'es-AR' });
 
 export const MyCartPage = () => {
 
     const { cart, startConfirmarCompra } = useCartStore();
     const [confirmCompra, setConfirmCompra] = useState(false);
+    const [preferenceId, setPreferenceId] = useState(null);
+
+
+    const idReference = async () => {
+        try {
+            const resultado = await referenceId(cart._id);
+            if (resultado.ok)
+                setPreferenceId(resultado.idPreference);
+        } catch (error) {
+            console.log({ error });
+        }
+    }
 
 
     if (!cart) {
@@ -59,7 +78,14 @@ export const MyCartPage = () => {
                         <strong>Total: </strong> ${total.toFixed(2)}
                     </div>
                     <div className="d-flex justify-content-center mt-3">
-                        <button onClick={confirmarCompra} className="btn btn-primary">Confirmar compra</button>
+                        {
+                            !preferenceId && <button onClick={idReference} className="btn btn-primary">Confirmar compra</button>
+                        }
+                    </div>
+                    <div className="d-flex justify-content-center mt-3">
+                        {
+                            preferenceId && <Wallet initialization={{ preferenceId }} customization={{ texts: { valueProp: 'smart_option' } }} />
+                        }
                     </div>
                 </>
             }
