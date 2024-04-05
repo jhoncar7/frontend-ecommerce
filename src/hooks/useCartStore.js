@@ -11,6 +11,7 @@ export const useCartStore = () => {
 
     const startGetCartById = async (id) => {
         const resp = await getCartById(id);
+        console.log('respuesta de startGetCartById', { resp });
         if (resp.ok) {
             dispatch(onCart(resp.cart));
             return;

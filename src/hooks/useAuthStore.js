@@ -102,6 +102,7 @@ export const useAuthStore = () => {
 
         if (resp.ok) {
             const { _id, cart_id, lastName, name, rol } = resp;
+            console.log({ _id, cart_id, lastName, name, rol });
             startGetCartById(cart_id);
             // startGetTickets();
             return dispatch(onLogin({ _id, cart_id, lastName, name, rol }));
