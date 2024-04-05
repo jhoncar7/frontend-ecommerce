@@ -32,6 +32,8 @@ export const NavBar = () => {
                     }
 
                 </div>
+
+                <NavLink to='/chat' className='navbar-brand' style={{ marginRight: '15px' }}>Chat Grupal</NavLink>
             </div>
 
             <div style={{ marginRight: '50px' }}>

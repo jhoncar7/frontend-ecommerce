@@ -11,7 +11,6 @@ export const InicioPage = () => {
         startGetProducts();
     }, []);
 
-
     return (
         <div>
             <NavBar />
